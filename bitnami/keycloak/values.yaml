@@ -256,7 +256,13 @@ extraStartupArgs: ""
 ##      #!/bin/bash
 ##      echo "Do something."
 ##
-initdbScripts: {}
+initdbScripts: 
+    set_no_ssl.sh: |
+       #!/bin/bash
+      /opt/bitnami/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user  adminroot@proteantecs.com --config /tmp/vztmp --password $KEYCLOAK_ADMIN_PASSWORD
+      /opt/bitnami/keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE --config /tmp/vztmp
+      
+
 ## @param initdbScriptsConfigMap ConfigMap with the initdb scripts (Note: Overrides `initdbScripts`)
 ##
 initdbScriptsConfigMap: ""
